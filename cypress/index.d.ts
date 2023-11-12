@@ -15,7 +15,7 @@ declare global {
        * ```
        */
       createProduct(product: Product, token: string): Chainable<any>;
-      login(): Chainable<Promise<T>>;
+      login(): Chainable<any>;
     }
   }
 }

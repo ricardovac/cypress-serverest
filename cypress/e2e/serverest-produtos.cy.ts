@@ -1,15 +1,26 @@
 import { Product } from "../support/commands";
-import { commerce, random } from "faker-br";
+import { faker } from "@faker-js/faker";
 
 const Produto: Product = {
-  nome: commerce.productName(),
-  preco: commerce.price(),
-  descricao: commerce.productDescription(),
-  quantidade: random.number(),
+  nome: faker.commerce.productName(),
+  preco: Number(faker.commerce.price()),
+  descricao: faker.commerce.productDescription(),
+  quantidade: Math.floor(Math.random() * 100),
 };
 
-describe("Crud - Produto", () => {
-  it("Deve cadastrar produto com sucesso", () => {});
+before(() => {
+  cy.login();
+});
+
+describe("CRUD - Produto", () => {
+  it("Deve cadastrar produto com sucesso", () => {
+    cy.createProduct(Produto, Cypress.env("token")).then((response) => {
+      expect(response.status).to.eq(201);
+      expect(response.body.message).to.eq("Cadastro realizado com sucesso");
+      expect(response.body._id).to.not.be.null;
+      cy.log(JSON.stringify(response.body));
+    });
+  });
 
   it("Deve listar produto pelo Id", () => {});
 

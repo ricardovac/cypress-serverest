@@ -17,26 +17,25 @@ Cypress.Commands.add("login", () => {
         password: "teste",
       },
     })
-    .then((response) =>
-      cy.wrap(response.body.authorization, { log: false }).as("token"),
-    );
+    .then((response) => {
+      const responseBody = response.body as { authorization: string };
+      Cypress.env("token", responseBody.authorization);
+    });
 });
 
-Cypress.Commands.add("createProduct", (product: Product) => {
-  cy.login().then((token) => {
-    cy.log("**createProduct**").api({
-      failOnStatusCode: false,
-      method: "POST",
-      url: "/produtos",
-      headers: {
-        Authorization: token,
-      },
-      body: {
-        nome: product.nome,
-        preco: product.preco,
-        descricao: product.descricao,
-        quantidade: product.quantidade,
-      },
-    });
+Cypress.Commands.add("createProduct", (product: Product, token: string) => {
+  cy.log("**createProduct**").api({
+    failOnStatusCode: false,
+    method: "POST",
+    url: "/produtos",
+    headers: {
+      Authorization: token,
+    },
+    body: {
+      nome: product.nome,
+      preco: product.preco,
+      descricao: product.descricao,
+      quantidade: product.quantidade,
+    },
   });
 });

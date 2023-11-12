@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "typecheck": "tsc --skipLibCheck --noEmit",
+    "cy:open": "cypress open --config watchForFileChanges=false",
+    "cy:run": "cypress run"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +15,8 @@
   },
   "devDependencies": {
     "@bahmutov/cy-api": "^2.2.6",
-    "faker-br": "^0.4.1",
+    "@faker-js/faker": "^8.2.0",
+    "@types/node": "^20.9.0",
     "typescript": "^5.2.2"
   }
 }
