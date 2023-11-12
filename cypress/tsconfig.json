@@ -1,0 +1,9 @@
+// This will address instances where the project also uses @types/chai or @types/jquery
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "types": ["cypress", "node", "@bahmutov/cy-api"]
+  },
+  "include": ["**/*.ts"]
+}
