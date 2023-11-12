@@ -7,7 +7,6 @@ export type Product = {
 
 Cypress.Commands.add("generateToken", () => {
   cy.api({
-    failOnStatusCode: false,
     log: false,
     method: "POST",
     url: "/login",
@@ -23,7 +22,6 @@ Cypress.Commands.add("generateToken", () => {
 
 Cypress.Commands.add("createProduct", (product: Product, token: string) => {
   cy.log("**createProduct**").api({
-    failOnStatusCode: false,
     method: "POST",
     url: "/produtos",
     headers: {
@@ -35,6 +33,7 @@ Cypress.Commands.add("createProduct", (product: Product, token: string) => {
       descricao: product.descricao,
       quantidade: product.quantidade,
     },
+    failOnStatusCode: false,
   });
 });
 
@@ -58,4 +57,15 @@ Cypress.Commands.add(
       body,
       failOnStatusCode: false,
     }),
+);
+
+Cypress.Commands.add("deleteProduct", (token: string, productId: string) =>
+  cy.log("**deleteProduct**").api({
+    method: "DELETE",
+    url: `/produtos/${productId}`,
+    headers: {
+      Authorization: token,
+    },
+    failOnStatusCode: false,
+  }),
 );
