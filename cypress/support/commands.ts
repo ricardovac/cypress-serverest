@@ -5,22 +5,20 @@ export type Product = {
   quantidade: number;
 };
 
-Cypress.Commands.add("login", () => {
-  cy.log("**login**")
-    .api({
-      failOnStatusCode: false,
-      log: false,
-      method: "POST",
-      url: "/login",
-      body: {
-        email: "fulano@qa.com",
-        password: "teste",
-      },
-    })
-    .then((response) => {
-      const responseBody = response.body as { authorization: string };
-      Cypress.env("token", responseBody.authorization);
-    });
+Cypress.Commands.add("generateToken", () => {
+  cy.api({
+    failOnStatusCode: false,
+    log: false,
+    method: "POST",
+    url: "/login",
+    body: {
+      email: "fulano@qa.com",
+      password: "teste",
+    },
+  }).then((response) => {
+    const responseBody = response.body as { authorization: string };
+    Cypress.env("token", responseBody.authorization);
+  });
 });
 
 Cypress.Commands.add("createProduct", (product: Product, token: string) => {
@@ -39,3 +37,25 @@ Cypress.Commands.add("createProduct", (product: Product, token: string) => {
     },
   });
 });
+
+Cypress.Commands.add("getProduct", (productId: string) =>
+  cy.log("**getProduct**").api({
+    method: "GET",
+    url: `/produtos/${productId}`,
+    failOnStatusCode: false,
+  }),
+);
+
+Cypress.Commands.add(
+  "updateProduct",
+  (token: string, productId: string, body: Product) =>
+    cy.log("**updateProduct**").api({
+      method: "PUT",
+      url: `/produtos/${productId}`,
+      headers: {
+        Authorization: token,
+      },
+      body,
+      failOnStatusCode: false,
+    }),
+);
