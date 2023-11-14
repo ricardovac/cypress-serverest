@@ -71,7 +71,7 @@ describe("CRUD - Produto", () => {
   });
 });
 
-describe("Functional Test - Produto", () => {
+describe("Functional - Produto", () => {
   before(() => {
     cy.createProduct(produto, Cypress.env("token")).then((res: Response) => {
       productId = res.body._id;

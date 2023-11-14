@@ -46,7 +46,6 @@ Cypress.Commands.add("getProducts", () =>
   cy.log("**getProducts**").api({
     method: "GET",
     url: "/produtos",
-    failOnStatusCode: false,
   })
 );
 
@@ -54,7 +53,6 @@ Cypress.Commands.add("getProduct", (productId) =>
   cy.log("**getProduct**").api({
     method: "GET",
     url: `/produtos/${productId}`,
-    failOnStatusCode: false,
   })
 );
 
@@ -66,7 +64,6 @@ Cypress.Commands.add("updateProduct", (productId, token, body) =>
       Authorization: token,
     },
     body,
-    failOnStatusCode: false,
   })
 );
 
@@ -106,6 +103,5 @@ Cypress.Commands.add("addToCart", (productId, quantity, token) => {
         },
       ],
     },
-    failOnStatusCode: false,
   });
 });
