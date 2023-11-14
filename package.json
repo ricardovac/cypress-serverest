@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "typecheck": "tsc --skipLibCheck --noEmit",
-    "lint": "pnpx eslint --ext=.js,.ts,.tsx",
+    "lint": "npx eslint --ext=.js,.ts,.tsx",
     "cy:open": "cypress open --config watchForFileChanges=false",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "report:merge": "mochawesome-merge cypress/results/json/* > index.json",
+    "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +20,11 @@
     "@bahmutov/cy-api": "^2.2.6",
     "@faker-js/faker": "^8.2.0",
     "@types/node": "^20.9.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "cypress-mochawesome-reporter": "^3.6.0",
+    "cypress-multi-reporters": "^1.6.3",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0"
   }
 }

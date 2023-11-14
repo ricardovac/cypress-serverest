@@ -9,8 +9,11 @@ jobs:
       - name: Cypress Run
         uses: cypress-io/github-action@v6
         with:
-          env: true
           browser: chrome
+      - name: Copy test execution videos
+        run: |
+          cp -r cypress/videos public/videos
+      - name: Merge test results into one
       - name: Merge results
         run: npm run report:merge
       - name: Generate results
