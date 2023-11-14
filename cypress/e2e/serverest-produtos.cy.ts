@@ -27,6 +27,20 @@ describe("CRUD - Produto", () => {
     });
   });
 
+  it("Deve listar todos os produtos", () => {
+    cy.getProducts().then((res) => {
+      expect(res.status).to.eq(200);
+      expect(res.body.produtos).to.be.an("array");
+      expect(res.body.produtos[0]).to.have.all.keys(
+        "_id",
+        "nome",
+        "preco",
+        "descricao",
+        "quantidade"
+      );
+    });
+  });
+
   it("Deve listar um produto pelo Id", () => {
     cy.getProduct(productId).then((res: Response) => {
       expect(res.status).to.eq(200);

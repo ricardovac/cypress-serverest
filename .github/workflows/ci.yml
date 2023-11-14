@@ -1,27 +1,22 @@
-name: cypress-serverest-api-test
+name: cypress-api-test
 on: [push]
 jobs:
-  install-dependencies:
-    name: Install Dependencies
+  cypress-run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Install dependencies
-        uses: cypress-io/github-action@v6.5.0
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Cypress Run
+        uses: cypress-io/github-action@v6
         with:
-          runTests: false
-  cypress-e2e-test:
-    needs: [install-dependencies]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Cypress e2e tests
-        uses: cypress-io/github-action@v6.5.0
-        with:
+          env: true
           browser: chrome
-          record: true
-          group: e2e-tests
-          tag: e2e-tests
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge results
+        run: npm run report:merge
+      - name: Generate results
+        run: npm run report:generate
+      - name: Deploy reports page
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

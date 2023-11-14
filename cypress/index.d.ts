@@ -9,6 +9,8 @@ declare global {
 
       getProduct(productId: string): Chainable<any>;
 
+      getProducts(): Chainable<any>;
+
       generateToken(): Chainable<any>;
 
       updateProduct(

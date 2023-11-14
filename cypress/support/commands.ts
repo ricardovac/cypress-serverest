@@ -42,6 +42,14 @@ Cypress.Commands.add("createProduct", (product, token) => {
   });
 });
 
+Cypress.Commands.add("getProducts", () =>
+  cy.log("**getProducts**").api({
+    method: "GET",
+    url: "/produtos",
+    failOnStatusCode: false,
+  })
+);
+
 Cypress.Commands.add("getProduct", (productId) =>
   cy.log("**getProduct**").api({
     method: "GET",
