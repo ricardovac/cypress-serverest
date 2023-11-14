@@ -25,14 +25,18 @@ declare global {
        * cy.updateProduct(token, productId, { nome: "Logitech", descricao: "Mouse", preco:  100, quantidade:  10 })
        */
       updateProduct(
-        token: string,
         productId: string,
+        token: string,
         body: Product,
       ): Chainable<any>;
       /** Exclui um produto na API Rest com o token informado
        * cy.deleteProduct(token, productId)
        */
-      deleteProduct(token: string, productId: string): Chainable<any>;
+      deleteProduct(productId: string, token: string): Chainable<any>;
+      /** Adiciona um produto ao carrinho
+       * cy.addToCart(productId)
+       */
+      addToCart(productId: string, quantity: number, token: string): Chainable<any>;
     }
   }
 }

@@ -5,6 +5,11 @@ export type Product = {
   quantidade: number;
 };
 
+export type ProductResponse = {
+  _id: string;
+  message: string;
+} & Product;
+
 Cypress.Commands.add("generateToken", () => {
   cy.api({
     log: false,
@@ -42,12 +47,12 @@ Cypress.Commands.add("getProduct", (productId: string) =>
     method: "GET",
     url: `/produtos/${productId}`,
     failOnStatusCode: false,
-  }),
+  })
 );
 
 Cypress.Commands.add(
   "updateProduct",
-  (token: string, productId: string, body: Product) =>
+  (productId: string, token: string, body: Product) =>
     cy.log("**updateProduct**").api({
       method: "PUT",
       url: `/produtos/${productId}`,
@@ -56,10 +61,10 @@ Cypress.Commands.add(
       },
       body,
       failOnStatusCode: false,
-    }),
+    })
 );
 
-Cypress.Commands.add("deleteProduct", (token: string, productId: string) =>
+Cypress.Commands.add("deleteProduct", (productId: string, token: string) =>
   cy.log("**deleteProduct**").api({
     method: "DELETE",
     url: `/produtos/${productId}`,
@@ -67,5 +72,37 @@ Cypress.Commands.add("deleteProduct", (token: string, productId: string) =>
       Authorization: token,
     },
     failOnStatusCode: false,
-  }),
+  })
+);
+
+Cypress.Commands.add(
+  "addToCart",
+  (productId: string, quantity: number, token: string) => {
+    // Evitar erro de usuário já possui um carrinho
+    cy.api({
+      log: false,
+      method: "DELETE",
+      url: `/carrinhos/concluir-compra`,
+      headers: {
+        Authorization: token,
+      },
+    });
+
+    cy.log("**addToCart**").api({
+      method: "POST",
+      url: "/carrinhos",
+      headers: {
+        Authorization: token,
+      },
+      body: {
+        produtos: [
+          {
+            idProduto: productId,
+            quantidade: quantity,
+          },
+        ],
+      },
+      failOnStatusCode: false,
+    });
+  }
 );
