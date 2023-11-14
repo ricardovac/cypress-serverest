@@ -1,0 +1,27 @@
+name: cypress-serverest-api-test
+on: [push]
+jobs:
+  install-dependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        uses: cypress-io/github-action@v6.5.0
+        with:
+          runTests: false
+  cypress-e2e-test:
+    needs: [install-dependencies]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cypress e2e tests
+        uses: cypress-io/github-action@v6.5.0
+        with:
+          browser: chrome
+          record: true
+          group: e2e-tests
+          tag: e2e-tests
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
