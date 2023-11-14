@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "typecheck": "tsc --skipLibCheck --noEmit",
+    "lint": "bunx eslint --ext=.js,.ts,.tsx",
     "cy:open": "cypress open --config watchForFileChanges=false",
     "cy:run": "cypress run"
   },

@@ -50,7 +50,7 @@ describe("CRUD - Produto", () => {
   });
 
   it("Deve excluir um produto", () => {
-    cy.deleteProduct(productId, Cypress.env("token")).then((res) => {
+    cy.deleteProduct(productId, Cypress.env("token")).then((res: Response) => {
       expect(res.status).to.eq(200);
       expect(res.body.message).to.eq("Registro excluído com sucesso");
     });

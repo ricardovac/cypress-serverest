@@ -1,9 +1,12 @@
 // This will address instances where the project also uses @types/chai or @types/jquery
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["es5", "dom"],
-    "types": ["cypress", "node", "@bahmutov/cy-api"]
+    "target": "ESNext",
+    "lib": ["ESNext", "dom"],
+    "types": ["cypress", "node", "@bahmutov/cy-api"],
+    "allowJs": true,
+    "resolveJsonModule": true
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "extends": "../tsconfig.json"
 }
